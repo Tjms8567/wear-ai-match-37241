@@ -2,6 +2,7 @@ import { ShoppingCart, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
 
 interface ProductCardProps {
   id: string;
@@ -12,8 +13,13 @@ interface ProductCardProps {
   colors?: string[];
 }
 
-const ProductCard = ({ name, price, image, category, colors = [] }: ProductCardProps) => {
+const ProductCard = ({ id, name, price, image, category, colors = [] }: ProductCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
+  const { addItem } = useCart();
+
+  const handleAddToCart = () => {
+    addItem({ id, name, price, image });
+  };
 
   return (
     <Card className="group relative overflow-hidden border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-card-hover animate-fade-in">
@@ -72,7 +78,7 @@ const ProductCard = ({ name, price, image, category, colors = [] }: ProductCardP
           </div>
         )}
 
-        <Button className="w-full group/btn" size="sm">
+        <Button className="w-full group/btn" size="sm" onClick={handleAddToCart}>
           <ShoppingCart className="mr-2 h-4 w-4 group-hover/btn:rotate-12 transition-transform" />
           Add to Cart
         </Button>
