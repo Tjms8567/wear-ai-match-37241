@@ -103,9 +103,11 @@ const Cart = () => {
                 </div>
               </div>
 
-              <Button className="w-full mb-4" disabled={items.length === 0}>
-                Proceed to Checkout
-              </Button>
+              <Link to="/checkout" className="block">
+                <Button className="w-full mb-4" disabled={items.length === 0}>
+                  Proceed to Checkout
+                </Button>
+              </Link>
 
               <div className="space-y-3 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">

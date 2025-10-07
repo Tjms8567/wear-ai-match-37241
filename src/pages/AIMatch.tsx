@@ -2,11 +2,20 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Upload, Sparkles, ArrowRight } from "lucide-react";
+import { Upload, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useProducts } from "@/hooks/useProducts";
+import { findMatchingProducts } from "@/lib/aiMatching";
+import ProductCard from "@/components/ProductCard";
+import { toast } from "@/hooks/use-toast";
 
 const AIMatch = () => {
+  const navigate = useNavigate();
+  const { data: products, isLoading: productsLoading } = useProducts();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isMatching, setIsMatching] = useState(false);
+  const [matchedProducts, setMatchedProducts] = useState<any[]>([]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -14,8 +23,39 @@ const AIMatch = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setSelectedImage(e.target?.result as string);
+        setMatchedProducts([]); // Reset matches when new image is uploaded
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFindMatches = async () => {
+    if (!selectedImage || !products) {
+      toast({
+        title: "Unable to find matches",
+        description: "Please upload an image first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsMatching(true);
+    try {
+      const matches = await findMatchingProducts(selectedImage, products);
+      setMatchedProducts(matches);
+      
+      toast({
+        title: "Matches found!",
+        description: `Found ${matches.length} products that match your style`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error finding matches",
+        description: "Please try again later",
+        variant: "destructive",
+      });
+    } finally {
+      setIsMatching(false);
     }
   };
 
@@ -89,15 +129,49 @@ const AIMatch = () => {
                         onChange={handleImageUpload}
                       />
                     </label>
-                    <Button className="flex-1 group">
-                      Find Matches
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <Button 
+                      className="flex-1 group" 
+                      onClick={handleFindMatches}
+                      disabled={isMatching || productsLoading}
+                    >
+                      {isMatching ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Finding Matches...
+                        </>
+                      ) : (
+                        <>
+                          Find Matches
+                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </>
+                      )}
                     </Button>
                   </div>
                 </div>
               )}
             </div>
           </Card>
+
+          {/* Matched Products Section */}
+          {matchedProducts.length > 0 && (
+            <div className="mt-12">
+              <h2 className="font-display text-2xl md:text-3xl font-bold mb-6 text-center">
+                Your Perfect Matches
+              </h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {matchedProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.title}
+                    price={product.base_price}
+                    image={product.images[0] || "/placeholder.svg"}
+                    category={product.product_type}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="mt-12 grid md:grid-cols-3 gap-6">
             <Card className="p-6 text-center">

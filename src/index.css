@@ -9,54 +9,55 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --foreground: 0 0% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover-foreground: 0 0% 10%;
 
     --primary: 197 71% 73%;
-    --primary-foreground: 0 0% 0%;
+    --primary-foreground: 0 0% 10%;
 
     --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 0%;
+    --secondary-foreground: 0 0% 10%;
 
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
 
     --accent: 197 71% 73%;
-    --accent-foreground: 0 0% 0%;
+    --accent-foreground: 0 0% 10%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
+    --border: 197 71% 73%;
     --input: 0 0% 90%;
     --ring: 197 71% 73%;
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 0%;
+    --sidebar-foreground: 0 0% 10%;
     --sidebar-primary: 197 71% 73%;
-    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-primary-foreground: 0 0% 10%;
     --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 0%;
-    --sidebar-border: 0 0% 90%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 197 71% 73%;
     --sidebar-ring: 197 71% 73%;
 
     /* Custom Design Tokens */
     --sky-blue: 197 71% 73%;
     --sky-blue-dark: 197 71% 60%;
-    --black: 0 0% 0%;
-    --white: 0 0% 100%;
+    --primary-black: 0 0% 10%;
+    --pure-white: 0 0% 100%;
     
-    /* Shadows and Effects */
+    /* Shadows and Effects - 3D Card Effect */
     --shadow-card: 0px 4px 12px rgba(135, 206, 235, 0.15);
     --shadow-card-hover: 0px 8px 24px rgba(135, 206, 235, 0.25);
-    --shadow-3d: 0px 10px 30px rgba(0, 0, 0, 0.1), inset 0px -2px 0px rgba(135, 206, 235, 0.3);
+    --shadow-3d: 0px 8px 16px rgba(135, 206, 235, 0.2), 0px 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-3d-hover: 0px 12px 24px rgba(135, 206, 235, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -71,5 +72,10 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
   }
 }

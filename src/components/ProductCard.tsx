@@ -22,7 +22,7 @@ const ProductCard = ({ id, name, price, image, category, colors = [] }: ProductC
   };
 
   return (
-    <Card className="group relative overflow-hidden border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-card-hover animate-fade-in">
+    <Card className="group relative overflow-hidden border border-primary transition-all duration-300 animate-fade-in" style={{ boxShadow: 'var(--shadow-3d)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-3d-hover)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-3d)'}>
       <div className="relative aspect-square overflow-hidden bg-secondary/20">
         <img
           src={image}
