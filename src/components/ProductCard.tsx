@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
 import { useCart } from "@/contexts/CartContext";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
   id: string;
@@ -16,13 +17,26 @@ interface ProductCardProps {
 const ProductCard = ({ id, name, price, image, category, colors = [] }: ProductCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const { addItem } = useCart();
+  const navigate = useNavigate();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     addItem({ id, name, price, image });
   };
 
+  const handleCardClick = () => {
+    navigate(`/product/${id}`);
+  };
+
   return (
-    <Card className="group relative overflow-hidden border border-primary transition-all duration-300 animate-fade-in" style={{ boxShadow: 'var(--shadow-3d)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-3d-hover)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-3d)'}>
+    <Card 
+      className="group relative overflow-hidden border border-primary transition-all duration-300 animate-fade-in cursor-pointer" 
+      style={{ boxShadow: 'var(--shadow-3d)' }} 
+      onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-3d-hover)'} 
+      onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-3d)'}
+      onClick={handleCardClick}
+    >
       <div className="relative aspect-square overflow-hidden bg-secondary/20">
         <img
           src={image}

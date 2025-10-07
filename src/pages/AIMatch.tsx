@@ -2,6 +2,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Upload, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +19,10 @@ const AIMatch = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isMatching, setIsMatching] = useState(false);
   const [matchedProducts, setMatchedProducts] = useState<any[]>([]);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [agreedToMarketing, setAgreedToMarketing] = useState(false);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -39,9 +46,25 @@ const AIMatch = () => {
       return;
     }
 
+    // Show signup modal first
+    setShowSignupModal(true);
+  };
+
+  const handleSubmitSignup = async () => {
+    if (!email || !phone) {
+      toast({
+        title: "Please fill in all fields",
+        description: "Email and phone are required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setShowSignupModal(false);
     setIsMatching(true);
+    
     try {
-      const matches = await findMatchingProducts(selectedImage, products);
+      const matches = await findMatchingProducts(selectedImage!, products!);
       setMatchedProducts(matches);
       
       toast({
@@ -203,6 +226,85 @@ const AIMatch = () => {
             </Card>
           </div>
         </div>
+
+        {/* Signup Modal */}
+        <Dialog open={showSignupModal} onOpenChange={setShowSignupModal}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center text-xl font-bold">Find Your Perfect Match</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              {selectedImage && (
+                <div className="flex items-center gap-4 p-4 bg-secondary/20 rounded-lg">
+                  <img src={selectedImage} alt="Uploaded sneaker" className="w-20 h-20 object-cover rounded" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Your Sneaker</p>
+                    <Button
+                      variant="link"
+                      className="text-primary p-0 h-auto text-sm"
+                      onClick={() => {
+                        setShowSignupModal(false);
+                        document.getElementById('image-upload-new')?.click();
+                      }}
+                    >
+                      Replace Photo
+                    </Button>
+                  </div>
+                </div>
+              )}
+              
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold mb-2">EMAIL</label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-semibold mb-2">PHONE</label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="(123) 456-7890"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2">
+                <Checkbox
+                  id="marketing"
+                  checked={agreedToMarketing}
+                  onCheckedChange={(checked) => setAgreedToMarketing(checked as boolean)}
+                />
+                <label htmlFor="marketing" className="text-xs text-muted-foreground leading-tight">
+                  By submitting this form, you agree to receive recurring automated promotional and personalized marketing text messages and emails (e.g. cart reminders) from us at the cell number used when signing up. Consent is not a condition of any purchase. Reply HELP for help and STOP to cancel. Msg frequency varies. Msg & data rates may apply.
+                </label>
+              </div>
+
+              <Button 
+                className="w-full h-12 text-base font-semibold"
+                onClick={handleSubmitSignup}
+              >
+                Upload & Find Matching Fit
+              </Button>
+
+              <Button
+                variant="ghost"
+                className="w-full"
+                onClick={() => setShowSignupModal(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </main>
       <Footer />
     </div>

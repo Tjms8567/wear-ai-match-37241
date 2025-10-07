@@ -32,52 +32,32 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4">Shop</h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors">
-                  All Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/collections" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Collections
-                </Link>
-              </li>
-              <li>
-                <Link to="/ai-match" className="text-muted-foreground hover:text-foreground transition-colors">
-                  AI Match
-                </Link>
-              </li>
-              <li>
-                <Link to="/new-arrivals" className="text-muted-foreground hover:text-foreground transition-colors">
-                  New Arrivals
-                </Link>
-              </li>
+              <li><Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors">Home</Link></li>
+              <li><Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors">Find a Sneaker</Link></li>
+              <li><Link to="/collections" className="text-muted-foreground hover:text-foreground transition-colors">Collections</Link></li>
+              <li><Link to="/deals" className="text-muted-foreground hover:text-foreground transition-colors">Discounts & Deals</Link></li>
+              <li><Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">Blog / Sneaker News</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-4">Account</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/account" className="text-muted-foreground hover:text-foreground transition-colors">My Account</Link></li>
+              <li><Link to="/wishlist" className="text-muted-foreground hover:text-foreground transition-colors">My Wishlist</Link></li>
+              <li><Link to="/referral" className="text-muted-foreground hover:text-foreground transition-colors">Referral / Affiliate Program</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-semibold mb-4">Support</h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/shipping" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Shipping Info
-                </Link>
-              </li>
-              <li>
-                <Link to="/returns" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Returns
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">
-                  FAQ
-                </Link>
-              </li>
+              <li><Link to="/help" className="text-muted-foreground hover:text-foreground transition-colors">Help</Link></li>
+              <li><Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact Us</Link></li>
+              <li><Link to="/shipping" className="text-muted-foreground hover:text-foreground transition-colors">Shipping Info</Link></li>
+              <li><Link to="/returns" className="text-muted-foreground hover:text-foreground transition-colors">Returns & Refunds</Link></li>
+              <li><Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">Frequently Asked Questions</Link></li>
+              <li><Link to="/how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">How it Works</Link></li>
             </ul>
           </div>
 
@@ -101,13 +81,10 @@ const Footer = () => {
 
         <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <p>© 2025 WearMatch AI. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link to="/privacy" className="hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>
-            <Link to="/terms" className="hover:text-foreground transition-colors">
-              Terms of Service
-            </Link>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
+            <Link to="/about" className="hover:text-foreground transition-colors">About Us</Link>
           </div>
         </div>
       </div>
