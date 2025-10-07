@@ -1,7 +1,13 @@
-import { ShoppingCart, Search, Menu, Sparkles } from "lucide-react";
+import { ShoppingCart, Search, Menu, Sparkles, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   return (
@@ -15,10 +21,35 @@ const Header = () => {
             <Sparkles className="h-6 w-6 text-primary" />
             <span className="font-display text-xl font-bold">WearMatch AI</span>
           </Link>
-          <nav className="hidden md:flex gap-6">
-            <Link to="/products" className="text-sm font-medium transition-colors hover:text-primary">
-              Products
-            </Link>
+          <nav className="hidden md:flex gap-6 items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger className="text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 outline-none">
+                Products
+                <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-background z-50">
+                <DropdownMenuItem asChild>
+                  <Link to="/products?category=all" className="cursor-pointer">
+                    All Products
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/products?category=unisex" className="cursor-pointer">
+                    Unisex
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/products?category=mens" className="cursor-pointer">
+                    Men's
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/products?category=kids" className="cursor-pointer">
+                    Kids
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Link to="/ai-match" className="text-sm font-medium transition-colors hover:text-primary">
               AI Match
             </Link>

@@ -6,10 +6,20 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Filter } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const Products = () => {
   const { data: products, isLoading } = useProducts();
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState("all");
+
+  useEffect(() => {
+    const category = searchParams.get("category");
+    if (category) {
+      setActiveTab(category);
+    }
+  }, [searchParams]);
 
   const filterProducts = (category: string) => {
     if (!products) return [];
@@ -64,7 +74,7 @@ const Products = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="all" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
             <TabsList>
               <TabsTrigger value="all">All</TabsTrigger>
